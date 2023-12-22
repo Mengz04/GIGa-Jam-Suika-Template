@@ -6,6 +6,8 @@ public class BallScript : MonoBehaviour
 {
     [SerializeField] private int ballLevel;
     private ScoreScript scoreScript;
+
+    private bool checkY;
     [SerializeField] private GameObject[] ballPrefab;
     public int GetBallLevel()
     {
@@ -14,7 +16,17 @@ public class BallScript : MonoBehaviour
 
     void Start()
     {
+        checkY = false;
         scoreScript = ScoreScript.instance;
+        StartCoroutine(Wait(2.0f));
+    }
+
+    void Update(){
+        if(checkY == true){
+            if(this.transform.position.y > 2.1f){
+                Debug.Log("kalah");
+            }
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -39,5 +51,6 @@ public class BallScript : MonoBehaviour
     IEnumerator Wait(float seconds)
     {
         yield return new WaitForSeconds(seconds);
+        checkY = true;
     }
 }
